@@ -9,10 +9,15 @@ public class FingerScript : MonoBehaviour
     private float timeElapsed = 0;
     private float duration = 0.8f;
     public bool hasTouched;
+    private BoilScoreHandler boilScoreHandler;
+    private bool hasBeenCut;
 
     // Start is called before the first frame update
     void Start()
     {
+        hasBeenCut = false;
+        boilScoreHandler = GameObject.Find("ScoreHandler").GetComponent<BoilScoreHandler>();
+
         StartPosition = transform.position;
         if(transform.GetChild(0).transform.rotation == Quaternion.Euler(0, 0, 90) || transform.GetChild(0).transform.rotation == Quaternion.Euler(0, 0, 270))
         {
@@ -23,6 +28,8 @@ public class FingerScript : MonoBehaviour
             GoalPosition = transform.position;
             GoalPosition.y = 0;
         }
+
+        duration = Random.Range(1, 2f);
     }
 
     // Update is called once per frame
@@ -46,6 +53,11 @@ public class FingerScript : MonoBehaviour
         {
             StartCoroutine(DoSometingStupid());
         }
+
+        if(gameObject.transform.position == StartPosition && hasTouched)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private IEnumerator DoSometingStupid()
@@ -61,9 +73,14 @@ public class FingerScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("ouchies!!");
-        GoalPosition = transform.position;
-        timeElapsed = 0;
-        hasTouched = true;
+        if (!hasBeenCut)
+        {
+            Debug.Log("ouchies!!");
+            GoalPosition = transform.position;
+            timeElapsed = 0;
+            hasTouched = true;
+            boilScoreHandler.points -= 100;
+            hasBeenCut = true;
+        }
     }
 }

@@ -17,11 +17,6 @@ public class FingerSpawnerScript : MonoBehaviour
         StartCoroutine(Spawner());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private GameObject SelectRandomSpawn()
     {

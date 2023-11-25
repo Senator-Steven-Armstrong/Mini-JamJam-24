@@ -36,9 +36,13 @@ public class CutHandlerScript : MonoBehaviour
 
     public FruitStates _FruitState;
 
+    private BoilScoreHandler boilScoreHandler;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        boilScoreHandler = GameObject.Find("ScoreHandler").GetComponent<BoilScoreHandler>();
         totalFruitscut = 0;
         _isSliced = false;
         _FruitState = FruitStates.MOVINGIN;
@@ -132,6 +136,7 @@ public class CutHandlerScript : MonoBehaviour
         if (_FruitObject != null)
         {
             Destroy(_FruitObject);
+            boilScoreHandler.points += 300;
         }
         _FruitObject = Instantiate(fruits[Random.Range(0, fruits.Count-1)], _StartPos, Quaternion.identity);
         _FruitState = FruitStates.MOVINGIN;
