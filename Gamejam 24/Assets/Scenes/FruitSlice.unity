@@ -446,7 +446,7 @@ MonoBehaviour:
   - {fileID: 1058120365}
   - {fileID: 1058120365}
   - {fileID: 1058120365}
-  waitTime: 0.5
+  waitTime: 3
   FingerPrefab: {fileID: 8397953587371653128, guid: 934e3b190fc7da34b82567349616586f, type: 3}
   FingerSidewaysPrefab: {fileID: 8397953587371653128, guid: db750fe7e1cd89540bdcc8bc65c177fb, type: 3}
 --- !u!4 &1126706485
@@ -731,7 +731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3897914346737052081, guid: d0ce08ca186b8184695671c7c9eb7222, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8150491958932138180, guid: d0ce08ca186b8184695671c7c9eb7222, type: 3}
       propertyPath: m_RootOrder

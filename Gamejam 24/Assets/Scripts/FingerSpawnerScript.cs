@@ -33,7 +33,7 @@ public class FingerSpawnerScript : MonoBehaviour
         if(_startingWaitTime == waitTime)
         {
             // Gör så att det inte spawnar fingarar i första 5 sek
-            //yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(4);
         }
         yield return new WaitForSeconds(waitTime);
         GameObject RandomSpawn = SelectRandomSpawn();
@@ -48,7 +48,7 @@ public class FingerSpawnerScript : MonoBehaviour
             Finger.transform.GetChild(0).gameObject.transform.rotation = RandomSpawn.transform.rotation;
         }
         if(waitTime >= 0.3f)
-        waitTime -= 0.05f;
+        waitTime *= 0.95f;
         StartCoroutine(Spawner());
     }
 }
