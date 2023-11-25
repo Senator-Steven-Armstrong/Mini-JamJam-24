@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7da1762a5bc65be4a9152a11e8eb2467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalBerriesProcessed: 0
   points: 0
   text: {fileID: 599730730}
 --- !u!4 &81314036
@@ -451,8 +452,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   finger: {fileID: 8397953587371653128, guid: d2f5ec1d09d6de24da6391ff6446f281, type: 3}
   fruit: {fileID: 445372388587550628, guid: 23ca69a438da9d044bd24dd5f9f6c38d, type: 3}
-  waitTime: 3
-  waitTimeFruit: 3
+  waitTime: 5
+  waitTimeFruit: 4
 --- !u!4 &1781880011
 Transform:
   m_ObjectHideFlags: 0

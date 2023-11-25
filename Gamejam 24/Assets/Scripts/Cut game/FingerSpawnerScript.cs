@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FingerSpawnerScript : MonoBehaviour
 {
@@ -9,12 +11,17 @@ public class FingerSpawnerScript : MonoBehaviour
     private float _startingWaitTime;
     public GameObject FingerPrefab;
     public GameObject FingerSidewaysPrefab;
+    public Text iWonder;
+    private string _text = "Man, I wonder what would happen if I just..";
+    public int fingersSpawnedTotal;
 
     // Start is called before the first frame update
     void Start()
     {
+        iWonder.text = "";
         _startingWaitTime = waitTime;
         StartCoroutine(Spawner());
+        StartCoroutine(SpawnText());
     }
 
 
@@ -28,7 +35,7 @@ public class FingerSpawnerScript : MonoBehaviour
         if(_startingWaitTime == waitTime)
         {
             // Gör så att det inte spawnar fingarar i första 5 sek
-            yield return new WaitForSeconds(4);
+            yield return new WaitForSeconds(7);
         }
         yield return new WaitForSeconds(waitTime);
         GameObject RandomSpawn = SelectRandomSpawn();
@@ -42,8 +49,21 @@ public class FingerSpawnerScript : MonoBehaviour
             GameObject Finger = Instantiate(FingerPrefab, RandomSpawn.transform.position, Quaternion.identity);
             Finger.transform.GetChild(0).gameObject.transform.rotation = RandomSpawn.transform.rotation;
         }
-        if(waitTime >= 0.3f)
-        waitTime *= 0.95f;
+        fingersSpawnedTotal++;
+        if(_startingWaitTime == waitTime)
+        {
+            yield return new WaitForSeconds(1.5f);
+        }
+        if(waitTime >= 0.7f)
+        waitTime *= 0.9f;
         StartCoroutine(Spawner());
+    }
+
+    private IEnumerator SpawnText()
+    {
+        yield return new WaitForSeconds(7);
+        iWonder.text = _text;
+        yield return new WaitForSeconds(waitTime);
+        iWonder.text = "";
     }
 }

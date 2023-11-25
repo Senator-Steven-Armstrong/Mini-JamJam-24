@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: c76a84053229fea4eafa12ea134d3c8b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 73c0474bff1434b4bad9fdb55f68ffd4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -178,4 +178,5 @@ MonoBehaviour:
   duration: 3
   isHeld: 0
   isFruit: 0
-  points: 0
+  hurtSprite: {fileID: 21300000, guid: 2f674e7900c7efc44a3657eecc0a0ab2, type: 3}
+  hurtRenderer: {fileID: 0}

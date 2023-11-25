@@ -11,13 +11,18 @@ public class FingerScript : MonoBehaviour
     public bool hasTouched;
     private BoilScoreHandler boilScoreHandler;
     private bool hasBeenCut;
+    private FingerSpawnerScript spawner;
+    public Sprite hurtSprite;
+    public SpriteRenderer hurtRenderer;
+    public AudioSource ouchies;
 
     // Start is called before the first frame update
     void Start()
     {
         hasBeenCut = false;
         boilScoreHandler = GameObject.Find("ScoreHandler").GetComponent<BoilScoreHandler>();
-
+        spawner = GameObject.Find("Finger Spawner").GetComponent<FingerSpawnerScript>();
+        hurtRenderer = gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
         StartPosition = transform.position;
         if(transform.GetChild(0).transform.rotation == Quaternion.Euler(0, 0, 90) || transform.GetChild(0).transform.rotation == Quaternion.Euler(0, 0, 270))
         {
@@ -28,8 +33,12 @@ public class FingerScript : MonoBehaviour
             GoalPosition = transform.position;
             GoalPosition.y = 0;
         }
+        if(spawner.fingersSpawnedTotal == 1)
+        {
+            duration = 3f;
+        }
 
-        duration = Random.Range(1, 2f);
+        duration = Random.Range(0.5f, 1f);
     }
 
     // Update is called once per frame
@@ -76,11 +85,23 @@ public class FingerScript : MonoBehaviour
         if (!hasBeenCut)
         {
             Debug.Log("ouchies!!");
+            ouchies.Play();
             GoalPosition = transform.position;
             timeElapsed = 0;
             hasTouched = true;
             boilScoreHandler.points -= 100;
             hasBeenCut = true;
+            hurtRenderer.sprite = hurtSprite;
+            duration = 5;
+            StartPosition *= 5;
+            StartCoroutine(HurtAnimation());
         }
+    }
+
+    private IEnumerator HurtAnimation() 
+    {
+        yield return new WaitForSeconds(0.2f);
+        hurtRenderer.flipX = !hurtRenderer.flipX;
+        StartCoroutine(HurtAnimation());
     }
 }

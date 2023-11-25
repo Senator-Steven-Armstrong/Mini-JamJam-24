@@ -5,14 +5,9 @@ using UnityEngine.UI;
 
 public class BoilScoreHandler : MonoBehaviour
 {
+    public int totalBerriesProcessed;
     public int points;
     public Text text;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()

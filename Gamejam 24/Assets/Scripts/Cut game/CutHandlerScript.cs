@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UIElements;
 
 public class CutHandlerScript : MonoBehaviour
 {
@@ -75,15 +77,18 @@ public class CutHandlerScript : MonoBehaviour
         switch (_FruitState)
         {
             case FruitStates.MOVINGIN:
-                float t = timeElapsed / duration;
-                _FruitObject.transform.position = Vector3.Lerp(_StartPos, Vector3.zero, t);
-                timeElapsed += Time.deltaTime;
-                if(_FruitObject.transform.position == Vector3.zero)
+                if(_FruitObject != null)
                 {
-                    Debug.Log("deez nuts");
-                    _FruitState = FruitStates.CHILLING;
-                    
-                    timeElapsed = 0;
+                    float t = timeElapsed / duration;
+                    _FruitObject.transform.position = Vector3.Lerp(_StartPos, Vector3.zero, t);
+                    timeElapsed += Time.deltaTime;
+                    if (_FruitObject.transform.position == Vector3.zero)
+                    {
+                        Debug.Log("deez nuts");
+                        _FruitState = FruitStates.CHILLING;
+
+                        timeElapsed = 0;
+                    }
                 }
                 break;
             case FruitStates.CHILLING:
@@ -130,6 +135,7 @@ public class CutHandlerScript : MonoBehaviour
 
     private void SpawnFruit()
     {
+
         numOfCutLinesTotal = 3;
         numOfCutLinesCut = 0;
         _FruitState = FruitStates.MOVINGIN;
@@ -137,6 +143,7 @@ public class CutHandlerScript : MonoBehaviour
         {
             Destroy(_FruitObject);
             boilScoreHandler.points += 300;
+            boilScoreHandler.totalBerriesProcessed++;
         }
         _FruitObject = Instantiate(fruits[Random.Range(0, fruits.Count-1)], _StartPos, Quaternion.identity);
         _FruitState = FruitStates.MOVINGIN;

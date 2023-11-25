@@ -13,6 +13,9 @@ public class FingerBoilScript : MonoBehaviour
 
     public bool isHeld;
     public bool isFruit;
+    public bool isHurt;
+    public Sprite hurtSprite;
+    public SpriteRenderer hurtRenderer;
 
     private BoilScoreHandler boilScoreHandler;
 
@@ -20,6 +23,8 @@ public class FingerBoilScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isHurt = false;
+        hurtRenderer = gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
         boilScoreHandler = GameObject.Find("ScoreHandler").GetComponent<BoilScoreHandler>();
         duration = Random.Range(2, 5);
         transform.position = CalcPointOnCircle();
@@ -55,19 +60,41 @@ public class FingerBoilScript : MonoBehaviour
             }
             
         }
-        else
+        else 
         {
-            float t = timeElapsed / duration;
-            transform.position = Vector2.Lerp(StartPosition, GoalPosition, t);
-            timeElapsed += Time.deltaTime;
+            // gör så att handen flyger tillbaka mot kanten när den är skadad
+            if (isHurt)
+            {
+                float t = timeElapsed / duration;
+                gameObject.transform.position = Vector2.Lerp(GoalPosition, StartPosition.normalized * 20, t);
+                timeElapsed += Time.deltaTime;
+                if (transform.position.x > 10f || transform.position.y > 6f || transform.position.x < -10f || transform.position.y < -6f)
+                {
+                    Debug.Log("DIE");
+                    Destroy(gameObject);
+                }
+            }
+            else
+            {
+                float t = timeElapsed / duration;
+                transform.position = Vector2.Lerp(StartPosition, GoalPosition, t);
+                timeElapsed += Time.deltaTime;
+            }
+            
         }
-
-        if (!isFruit && transform.position.x < 1f && transform.position.y < 1f && transform.position.x > -1f && transform.position.y > -1f)
+        if (!isFruit && transform.position.x < 1f && transform.position.y < 1f && transform.position.x > -1f && transform.position.y > -1f && !isHurt)
         {
             // OM HANDEN HAMNAR I KASTRULLEN
             Debug.Log("ouchies!!!");
-            Destroy(gameObject);
+            isHeld = false;
+            
+            gameObject.GetComponent<Collider2D>().enabled = false;
+            hurtRenderer.sprite = hurtSprite;
+            StartCoroutine(HurtAnimation());
             boilScoreHandler.points -= 100;
+            timeElapsed = 0;
+            duration = 1.8f;
+            isHurt = true;
         }
         if (isFruit && transform.position.x < 1f && transform.position.y < 1f && transform.position.x > -1f && transform.position.y > -1f)
         {
@@ -76,6 +103,8 @@ public class FingerBoilScript : MonoBehaviour
             Destroy(gameObject);
             boilScoreHandler.points += 150;
         }
+
+        
 
         //roterar mot center
         if (!isFruit)
@@ -109,5 +138,12 @@ public class FingerBoilScript : MonoBehaviour
     public void OnMouseUp()
     {
         isHeld = false;
+    }
+
+    private IEnumerator HurtAnimation()
+    {
+        yield return new WaitForSeconds(0.2f);
+        hurtRenderer.flipX = !hurtRenderer.flipX;
+        StartCoroutine(HurtAnimation());
     }
 }
