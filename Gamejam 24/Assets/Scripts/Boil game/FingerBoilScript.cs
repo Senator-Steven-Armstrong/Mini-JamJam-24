@@ -9,7 +9,7 @@ public class FingerBoilScript : MonoBehaviour
     private Vector2 GoalPosition = Vector2.zero;
     private Vector2 StartPosition;
     private float timeElapsed = 0;
-    public float duration = 3;
+    public float duration = 1;
 
     public bool isHeld;
     public bool isFruit;
@@ -26,7 +26,15 @@ public class FingerBoilScript : MonoBehaviour
         isHurt = false;
         hurtRenderer = gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
         boilScoreHandler = GameObject.Find("ScoreHandler").GetComponent<BoilScoreHandler>();
-        duration = Random.Range(2, 5);
+        if (isFruit)
+        {
+            duration = Random.Range(1.2f, 2.5f);
+        }
+        else
+        {
+            duration = Random.Range(0.8f, 1.5f);
+        }
+        
         transform.position = CalcPointOnCircle();
         StartPosition = transform.position;
     }
@@ -91,7 +99,8 @@ public class FingerBoilScript : MonoBehaviour
             gameObject.GetComponent<Collider2D>().enabled = false;
             hurtRenderer.sprite = hurtSprite;
             StartCoroutine(HurtAnimation());
-            boilScoreHandler.points -= 100;
+            ScoreCalculator.totalScore -= 200;
+            boilScoreHandler.points -= 200;
             timeElapsed = 0;
             duration = 1.8f;
             isHurt = true;
@@ -101,7 +110,8 @@ public class FingerBoilScript : MonoBehaviour
             // OM FRUKTEN HAMNAR I KASTRULLEN
             Debug.Log("WE JAMMING");
             Destroy(gameObject);
-            boilScoreHandler.points += 150;
+            ScoreCalculator.totalScore += 100;
+            boilScoreHandler.points += 100;
         }
 
         

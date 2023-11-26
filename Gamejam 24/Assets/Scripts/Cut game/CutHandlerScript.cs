@@ -142,6 +142,7 @@ public class CutHandlerScript : MonoBehaviour
         if (_FruitObject != null)
         {
             Destroy(_FruitObject);
+            ScoreCalculator.totalScore += 300;
             boilScoreHandler.points += 300;
             boilScoreHandler.totalBerriesProcessed++;
         }

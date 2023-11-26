@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
 {
@@ -9,10 +11,18 @@ public class GameHandler : MonoBehaviour
     public List<GameObject> GameObjectsToDisable;
     public float waitTime;
     public AudioSource music;
+    public Text text;
+
+    public int gameTime;
+    public int sceneIndex;
+    public AudioSource bigPling;
 
     // Start is called before the first frame update
     void Start()
     {
+
+        if(text != null)
+        text.text = gameTime.ToString();
         foreach (GameObject Object in GameObjectsToDisable)
         {
             Object.SetActive(true);
@@ -26,6 +36,7 @@ public class GameHandler : MonoBehaviour
             Object.SetActive(false);
         }
         StartCoroutine(StartGame());
+
     }
 
 
@@ -40,6 +51,7 @@ public class GameHandler : MonoBehaviour
         {
             Object.SetActive(true);
         }
+        StartCoroutine(StartGameTimer());
         music.Play();
         yield return new WaitForSeconds(2);
         foreach (GameObject Object in GameObjectsToEnableLater)
@@ -47,5 +59,28 @@ public class GameHandler : MonoBehaviour
             Object.SetActive(true);
         }
         
+    }
+
+    public IEnumerator StartGameTimer()
+    {
+        if (text != null)
+            text.text = gameTime.ToString();
+        if (gameTime <= 0)
+        {
+            Time.timeScale = 0;
+            music.Stop();
+            bigPling.Play();
+            yield return new WaitForSecondsRealtime(3);
+            Time.timeScale = 1;
+            SceneManager.LoadScene(sceneIndex);
+        }
+        else
+        {
+            gameTime--;
+            yield return new WaitForSeconds(1);
+            StartCoroutine(StartGameTimer());
+        }
+        
+       
     }
 }

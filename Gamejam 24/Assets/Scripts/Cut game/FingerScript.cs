@@ -89,6 +89,7 @@ public class FingerScript : MonoBehaviour
             GoalPosition = transform.position;
             timeElapsed = 0;
             hasTouched = true;
+            ScoreCalculator.totalScore -= 100;
             boilScoreHandler.points -= 100;
             hasBeenCut = true;
             hurtRenderer.sprite = hurtSprite;

@@ -33,7 +33,7 @@ public class FingerBoilSpawner : MonoBehaviour
             yield return new WaitForSeconds(4);
         }
         Instantiate(finger);
-        if (waitTime >= 0.5f)
+        if (waitTime >= 0.8f)
         {
             waitTime *= 0.9f;
             waitTime += Random.Range(-0.1f, 0.1f);
@@ -45,7 +45,7 @@ public class FingerBoilSpawner : MonoBehaviour
     private IEnumerator FruitSpawner()
     {
         Instantiate(fruit);
-        if (waitTimeFruit >= 0.5f)
+        if (waitTimeFruit >= 1f)
         {
             waitTimeFruit *= 0.9f;
             waitTimeFruit += Random.Range(-0.2f, 0.2f);
