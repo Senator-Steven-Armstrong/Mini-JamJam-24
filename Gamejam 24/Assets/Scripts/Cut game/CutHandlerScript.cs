@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UIElements;
 
 public class CutHandlerScript : MonoBehaviour
@@ -28,6 +26,9 @@ public class CutHandlerScript : MonoBehaviour
     private Vector3 _StartPos = new Vector3(-16, 0 , 0);
     private Vector3 _EndPos = new Vector3(16, 0, 0);
 
+    public SpriteRenderer fruitRenderer;
+    public List<Sprite> sprites;
+
     public enum FruitStates
     {
         MOVINGIN,
@@ -44,6 +45,7 @@ public class CutHandlerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         boilScoreHandler = GameObject.Find("ScoreHandler").GetComponent<BoilScoreHandler>();
         totalFruitscut = 0;
         _isSliced = false;
@@ -51,6 +53,7 @@ public class CutHandlerScript : MonoBehaviour
         numOfFruitsCut = 0;
         SpawnFruit();
         StartCoroutine(InstantiateNewCutlinePackage());
+        
     }
 
     // Update is called once per frame
@@ -61,6 +64,7 @@ public class CutHandlerScript : MonoBehaviour
             if( _isSliced)
             { // har hackat frukt två gånger spawnar helt ny frukt
                 totalFruitscut++;
+                fruitRenderer.sprite = sprites[2];
                 _FruitState = FruitStates.MOVINGOUT;
             } 
             else
@@ -71,6 +75,7 @@ public class CutHandlerScript : MonoBehaviour
                 Destroy(_CurrentCutLinesObject);
                 StartCoroutine(InstantiateNewCutlinePackage());
                 _isSliced = true;
+                fruitRenderer.sprite = sprites[1];
             }
         }
 
@@ -135,7 +140,6 @@ public class CutHandlerScript : MonoBehaviour
 
     private void SpawnFruit()
     {
-
         numOfCutLinesTotal = 3;
         numOfCutLinesCut = 0;
         _FruitState = FruitStates.MOVINGIN;
@@ -147,6 +151,7 @@ public class CutHandlerScript : MonoBehaviour
             boilScoreHandler.totalBerriesProcessed++;
         }
         _FruitObject = Instantiate(fruits[Random.Range(0, fruits.Count-1)], _StartPos, Quaternion.identity);
+        fruitRenderer = _FruitObject.GetComponent<SpriteRenderer>();
         _FruitState = FruitStates.MOVINGIN;
 
     }

@@ -301,6 +301,11 @@ MonoBehaviour:
   - {fileID: 445372388587550628, guid: 16494891e03119d41ad9eea21d3a19dc, type: 3}
   rotationSpeed: 0.05
   duration: 0.5
+  fruitRenderer: {fileID: 0}
+  sprites:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: f736c61317150e24ebd69dcd91d90841, type: 3}
+  - {fileID: 21300000, guid: 76f00b8abe382854f9b688746dc747e6, type: 3}
   _FruitState: 0
 --- !u!1 &425239948
 GameObject:
