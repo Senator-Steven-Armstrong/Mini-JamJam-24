@@ -10,7 +10,9 @@ public class UiManager : MonoBehaviour
     public Image blackPanel;
     private bool _isTurningBlack = false;
     private float _alpha;
-    
+    private int _index;
+    public bool willQuit;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class UiManager : MonoBehaviour
     {
         if(_isTurningBlack)
         {
+            
             blackPanel.color = new Color(0, 0, 0, _alpha);
             _alpha += 0.5f * Time.deltaTime;
             if(_alpha >= 1)
@@ -33,8 +36,15 @@ public class UiManager : MonoBehaviour
 
             if(blackPanel.color == new Color(0, 0, 0 , 1))
             {
-
-                SceneManager.LoadScene(0);
+                if (willQuit)
+                {
+                    Application.Quit();
+                }
+                else 
+                {
+                    SceneManager.LoadScene(_index);
+                }
+                
             }
         }
     }
@@ -43,11 +53,15 @@ public class UiManager : MonoBehaviour
     {
         pling.Play();
         _isTurningBlack = true;
+        _index = index;
+        blackPanel.raycastTarget = true;
     }
-
     public void QuitGame()
     {
-        Application.Quit();
+        pling.Play();
+        _isTurningBlack = true;
+        willQuit = true;
+        blackPanel.raycastTarget = true;
     }
 
 }

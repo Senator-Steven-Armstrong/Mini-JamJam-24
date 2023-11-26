@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FingerBoilSpawner : MonoBehaviour
 {
@@ -11,12 +12,16 @@ public class FingerBoilSpawner : MonoBehaviour
     public float waitTimeFruit;
     private float _startingWaitTimeFruit;
 
+    public Text iWonder;
+    private string _text = "Man, I wonder what this water feels like";
+
     // Start is called before the first frame update
     void Start()
     {
         _startingWaitTime = waitTime;
         StartCoroutine(FingerSpawner());
         StartCoroutine(FruitSpawner());
+        StartCoroutine(SpawnText());
     }
 
     // Update is called once per frame
@@ -30,7 +35,7 @@ public class FingerBoilSpawner : MonoBehaviour
         if (_startingWaitTime == waitTime)
         {
             // Gör så att det inte spawnar fingarar i första 5 sek
-            yield return new WaitForSeconds(4);
+            yield return new WaitForSeconds(6);
         }
         Instantiate(finger);
         if (waitTime >= 0.8f)
@@ -52,6 +57,14 @@ public class FingerBoilSpawner : MonoBehaviour
         }
         yield return new WaitForSeconds(waitTimeFruit);
         StartCoroutine(FruitSpawner());
+    }
+
+    private IEnumerator SpawnText()
+    {
+        yield return new WaitForSeconds(4);
+        iWonder.text = _text;
+        yield return new WaitForSeconds(2);
+        iWonder.text = "";
     }
 }
 

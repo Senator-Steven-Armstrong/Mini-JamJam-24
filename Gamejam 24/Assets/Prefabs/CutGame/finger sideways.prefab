@@ -278,3 +278,7 @@ MonoBehaviour:
   hurtSprite: {fileID: 21300000, guid: 494e84d839fcdfa4fa065f21da6f04d4, type: 3}
   hurtRenderer: {fileID: 0}
   ouchies: {fileID: 3651320113194455986}
+  sounds:
+  - {fileID: 8300000, guid: 6865ee3bf3747a2408a1512db36c7375, type: 3}
+  - {fileID: 8300000, guid: 557bd29746025c744a913f011ff008fd, type: 3}
+  - {fileID: 8300000, guid: 597dd13006fe5d74daa0604cf24797aa, type: 3}

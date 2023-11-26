@@ -40,7 +40,7 @@ public class CutHandlerScript : MonoBehaviour
     public FruitStates _FruitState;
 
     private BoilScoreHandler boilScoreHandler;
-
+    public GameHandler gameHandler;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +66,7 @@ public class CutHandlerScript : MonoBehaviour
                 totalFruitscut++;
                 fruitRenderer.sprite = sprites[2];
                 _FruitState = FruitStates.MOVINGOUT;
+                Destroy(_CurrentCutLinesObject);
             } 
             else
             { // har hackat en gång, roterar frukten

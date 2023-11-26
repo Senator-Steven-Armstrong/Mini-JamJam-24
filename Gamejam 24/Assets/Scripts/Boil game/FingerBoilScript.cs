@@ -19,10 +19,16 @@ public class FingerBoilScript : MonoBehaviour
 
     private BoilScoreHandler boilScoreHandler;
 
+    public AudioSource ouchies;
+    public List<AudioClip> sounds;
+
+    public AudioSource splash;
+    public GameHandler gameHandler;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameHandler = GameObject.Find("GameHandler").GetComponent<GameHandler>();
         isHurt = false;
         hurtRenderer = gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
         boilScoreHandler = GameObject.Find("ScoreHandler").GetComponent<BoilScoreHandler>();
@@ -32,7 +38,7 @@ public class FingerBoilScript : MonoBehaviour
         }
         else
         {
-            duration = Random.Range(0.8f, 1.5f);
+            duration = Random.Range(1f, 1.5f);
         }
         
         transform.position = CalcPointOnCircle();
@@ -42,6 +48,7 @@ public class FingerBoilScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if(isHeld)
         {
             
@@ -76,7 +83,7 @@ public class FingerBoilScript : MonoBehaviour
                 float t = timeElapsed / duration;
                 gameObject.transform.position = Vector2.Lerp(GoalPosition, StartPosition.normalized * 20, t);
                 timeElapsed += Time.deltaTime;
-                if (transform.position.x > 10f || transform.position.y > 6f || transform.position.x < -10f || transform.position.y < -6f)
+                if (transform.position.x > 30f || transform.position.y > 18f || transform.position.x < -30f || transform.position.y < -18f)
                 {
                     Debug.Log("DIE");
                     Destroy(gameObject);
@@ -95,7 +102,9 @@ public class FingerBoilScript : MonoBehaviour
             // OM HANDEN HAMNAR I KASTRULLEN
             Debug.Log("ouchies!!!");
             isHeld = false;
-            
+            ouchies.clip = sounds[Random.Range(0, sounds.Count)];
+            ouchies.Play();
+            splash.Play();
             gameObject.GetComponent<Collider2D>().enabled = false;
             hurtRenderer.sprite = hurtSprite;
             StartCoroutine(HurtAnimation());
@@ -108,10 +117,14 @@ public class FingerBoilScript : MonoBehaviour
         if (isFruit && transform.position.x < 1f && transform.position.y < 1f && transform.position.x > -1f && transform.position.y > -1f)
         {
             // OM FRUKTEN HAMNAR I KASTRULLEN
+            
             Debug.Log("WE JAMMING");
-            Destroy(gameObject);
+            AudioSource.PlayClipAtPoint(splash.clip, Vector3.zero);
+            
+            gameObject.SetActive(false);
             ScoreCalculator.totalScore += 100;
             boilScoreHandler.points += 100;
+            Destroy(gameObject);
         }
 
         
@@ -141,8 +154,12 @@ public class FingerBoilScript : MonoBehaviour
 
     public void OnMouseDown()
     {
-        isHeld = true;
-        Debug.Log(gameObject.name + " is being held");
+        if(gameHandler.gameTime > 0)
+        {
+            isHeld = true;
+            Debug.Log(gameObject.name + " is being held");
+        }
+        
     }
 
     public void OnMouseUp()
@@ -155,5 +172,11 @@ public class FingerBoilScript : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         hurtRenderer.flipX = !hurtRenderer.flipX;
         StartCoroutine(HurtAnimation());
+    }
+
+    private IEnumerator DestroyAfterDelay()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 }

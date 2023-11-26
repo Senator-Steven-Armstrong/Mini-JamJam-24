@@ -15,10 +15,13 @@ public class FingerScript : MonoBehaviour
     public Sprite hurtSprite;
     public SpriteRenderer hurtRenderer;
     public AudioSource ouchies;
+    public List<AudioClip> sounds;
+    public GameHandler gameHandler;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameHandler = GameObject.Find("GameHandler").GetComponent<GameHandler>();
         hasBeenCut = false;
         boilScoreHandler = GameObject.Find("ScoreHandler").GetComponent<BoilScoreHandler>();
         spawner = GameObject.Find("Finger Spawner").GetComponent<FingerSpawnerScript>();
@@ -82,15 +85,17 @@ public class FingerScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!hasBeenCut)
+        if (!hasBeenCut && gameHandler.gameTime > 0)
         {
+
             Debug.Log("ouchies!!");
+            ouchies.clip = sounds[Random.Range(0, sounds.Count)];
             ouchies.Play();
             GoalPosition = transform.position;
             timeElapsed = 0;
             hasTouched = true;
-            ScoreCalculator.totalScore -= 100;
-            boilScoreHandler.points -= 100;
+            ScoreCalculator.totalScore -= 70;
+            boilScoreHandler.points -= 70;
             hasBeenCut = true;
             hurtRenderer.sprite = hurtSprite;
             duration = 5;
