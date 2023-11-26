@@ -45,4 +45,9 @@ public class UiManager : MonoBehaviour
         _isTurningBlack = true;
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
 }
