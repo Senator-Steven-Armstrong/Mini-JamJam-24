@@ -48,6 +48,7 @@ public class ScoreCalculator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if(mysteryJam.transform.position != endPos)
         {
             float t = timeElapsed / duration;
@@ -58,35 +59,26 @@ public class ScoreCalculator : MonoBehaviour
 
         if (_isCounting)
         {
-            if(_currentMoney <= moneys)
+            if(_currentMoney <= moneys && moneys >= 0)
             {
                 _currentMoney += 0.01f;
                 text.text = "Profit: " + (Mathf.Round(_currentMoney * 100) / 100).ToString() + "$";
             }
+            else if (_currentMoney >= moneys && moneys < 0)
+            {
+               
+                _currentMoney -= 0.01f;
+                text.text = "Profit: " + (Mathf.Round(_currentMoney * 100) / 100).ToString() + "$";
+               
+
+            }
             else
             {
-                if(moneys < 0)
-                {
-                    _currentMoney -= 0.01f;
-                    text.text = "Profit: " + (Mathf.Round(_currentMoney * 100) / 100).ToString() + "$";
-                    if(moneys == _currentMoney)
-                    {
-                        Debug.Log("hit");
-                        _currentMoney = moneys;
-                        text.text = "Profit: " + (Mathf.Round(moneys * 100) / 100).ToString() + "$";
-                        _isCounting = false;
-                        chaching.Play();
-                    }
-                }
-                else
-                {
-                    _currentMoney = moneys;
-                    text.text = "Profit: " + (Mathf.Round(moneys * 100) / 100).ToString() + "$";
-                    _isCounting = false;
-                    chaching.Play();
-                    StartCoroutine(EnableReturnButton());
-                }
-                
+                _currentMoney = moneys;
+                text.text = "Profit: " + (Mathf.Round(moneys * 100) / 100).ToString() + "$";
+                _isCounting = false;
+                chaching.Play();
+                StartCoroutine(EnableReturnButton());
             }
             
 
@@ -168,7 +160,10 @@ public class ScoreCalculator : MonoBehaviour
         yield return new WaitForSeconds(drumRoll.clip.length - 0.01f);
         moneys = CalcMoney();
         grade = CalcGrade();
-        PlayerPrefs.SetFloat("HighScore", moneys);
+        if (moneys > PlayerPrefs.GetFloat("HighScore")){
+            PlayerPrefs.SetFloat("HighScore", moneys);
+        }
+        
         source.Play();
         yield return new WaitForSeconds(3f);
         _isCounting = true;

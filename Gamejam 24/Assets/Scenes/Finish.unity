@@ -1207,9 +1207,9 @@ MonoBehaviour:
   gradeLetters:
   - {fileID: 21300000, guid: a7170e52b684909429319b3a84eb5302, type: 3}
   - {fileID: 21300000, guid: 85da9c40fa225b4448d82a86fcf3e164, type: 3}
-  - {fileID: 21300000, guid: 14c6a53f29c6cd2499cd36c8fe91421a, type: 3}
-  - {fileID: 21300000, guid: a7170e52b684909429319b3a84eb5302, type: 3}
-  - {fileID: 21300000, guid: a7170e52b684909429319b3a84eb5302, type: 3}
+  - {fileID: 21300000, guid: 203098d6619b1e24297bb6c8e461dff4, type: 3}
+  - {fileID: 21300000, guid: 9fcb1385e743da7498c03bcddb07fe97, type: 3}
+  - {fileID: 21300000, guid: 44aaaee26d640c24cb5a85b21b019978, type: 3}
   - {fileID: 21300000, guid: a7170e52b684909429319b3a84eb5302, type: 3}
   - {fileID: 21300000, guid: a7170e52b684909429319b3a84eb5302, type: 3}
   gradeImage: {fileID: 116275773}

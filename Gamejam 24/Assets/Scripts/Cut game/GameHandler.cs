@@ -20,7 +20,7 @@ public class GameHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Debug.Log(ScoreCalculator.totalScore);
         if(text != null)
         text.text = gameTime.ToString();
         foreach (GameObject Object in GameObjectsToDisable)

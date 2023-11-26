@@ -162,7 +162,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 7, y: 9}
+  m_Size: {x: 6, y: 9}
   m_EdgeRadius: 0
 --- !u!82 &3651320113194455986
 AudioSource:
@@ -282,3 +282,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6865ee3bf3747a2408a1512db36c7375, type: 3}
   - {fileID: 8300000, guid: 557bd29746025c744a913f011ff008fd, type: 3}
   - {fileID: 8300000, guid: 597dd13006fe5d74daa0604cf24797aa, type: 3}
+  gameHandler: {fileID: 0}
