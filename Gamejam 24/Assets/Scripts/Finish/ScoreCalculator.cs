@@ -32,6 +32,8 @@ public class ScoreCalculator : MonoBehaviour
     public float timeElapsed = 0;
     public float duration = 1;
 
+    public GameObject button;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +41,6 @@ public class ScoreCalculator : MonoBehaviour
         timeElapsed = 0;
         _currentMoney = 0;
         _isCounting = false;
-        totalScore = -10000;
         Debug.Log(totalScore);
         StartCoroutine(DrumRoll());
     }
@@ -60,19 +61,19 @@ public class ScoreCalculator : MonoBehaviour
             if(_currentMoney <= moneys)
             {
                 _currentMoney += 0.01f;
-                text.text = (Mathf.Round(_currentMoney * 100) / 100).ToString() + "$";
+                text.text = "Profit: " + (Mathf.Round(_currentMoney * 100) / 100).ToString() + "$";
             }
             else
             {
                 if(moneys < 0)
                 {
                     _currentMoney -= 0.01f;
-                    text.text = (Mathf.Round(_currentMoney * 100) / 100).ToString() + "$";
+                    text.text = "Profit: " + (Mathf.Round(_currentMoney * 100) / 100).ToString() + "$";
                     if(moneys == _currentMoney)
                     {
                         Debug.Log("hit");
                         _currentMoney = moneys;
-                        text.text = (Mathf.Round(moneys * 100) / 100).ToString() + "$";
+                        text.text = "Profit: " + (Mathf.Round(moneys * 100) / 100).ToString() + "$";
                         _isCounting = false;
                         chaching.Play();
                     }
@@ -80,9 +81,10 @@ public class ScoreCalculator : MonoBehaviour
                 else
                 {
                     _currentMoney = moneys;
-                    text.text = (Mathf.Round(moneys * 100) / 100).ToString() + "$";
+                    text.text = "Profit: " + (Mathf.Round(moneys * 100) / 100).ToString() + "$";
                     _isCounting = false;
                     chaching.Play();
+                    StartCoroutine(EnableReturnButton());
                 }
                 
             }
@@ -100,7 +102,7 @@ public class ScoreCalculator : MonoBehaviour
     {
         gradeImage.color = new Color(1, 1, 1, 1);
 
-        if(totalScore <= 0)
+        if(totalScore < 1000)
         {
             jamSprite.sprite = jams[0];
             gradeImage.sprite = gradeLetters[0];
@@ -111,46 +113,50 @@ public class ScoreCalculator : MonoBehaviour
         {
             jamSprite.sprite = jams[1];
             gradeImage.sprite = gradeLetters[1];
-            source.clip = boo;
+            source.clip = fard;
             return "E";
         }
-        else if (totalScore >= 3000 && totalScore < 4500)
+        else if (totalScore >= 3000 && totalScore < 4000)
         {
             jamSprite.sprite = jams[1];
             gradeImage.sprite = gradeLetters[2];
             source.clip = boo;
             return "D";
         }
-        else if (totalScore >= 4500 && totalScore < 6000)
+        else if (totalScore >= 4000 && totalScore < 5000)
         {
             jamSprite.sprite = jams[2];
             gradeImage.sprite = gradeLetters[3];
             source.clip = slowClap;
             return "C";
         }
-        else if (totalScore >= 6000 && totalScore < 9000)
+        else if (totalScore >= 5000 && totalScore < 6000)
         {
             jamSprite.sprite = jams[2];
             gradeImage.sprite = gradeLetters[4];
             source.clip = slowClap;
+            moneys *= 2;
             return "B";
         }
-        else if (totalScore >= 9000 && totalScore < 12000)
+        else if (totalScore >= 6000 && totalScore < 7500)
         {
             jamSprite.sprite = jams[3];
             gradeImage.sprite = gradeLetters[5];
             source.clip = bigClap;
+            moneys *= 5;
             return "A";
         }
-        else if (totalScore >= 12000)
+        else if (totalScore >= 7500)
         {
             jamSprite.sprite = jams[3];
             gradeImage.sprite = gradeLetters[6];
             source.clip = bigClap;
+            moneys *= 8;
             return "S";
         }
         else
         {
+            Debug.Log("ooops");
             return "uuh not supposed to happen";
         }
         
@@ -160,10 +166,17 @@ public class ScoreCalculator : MonoBehaviour
     {
         drumRoll.Play();
         yield return new WaitForSeconds(drumRoll.clip.length - 0.01f);
-        grade = CalcGrade();
         moneys = CalcMoney();
+        grade = CalcGrade();
+        PlayerPrefs.SetFloat("HighScore", moneys);
         source.Play();
         yield return new WaitForSeconds(3f);
         _isCounting = true;
+    }
+
+    public IEnumerator EnableReturnButton()
+    {
+        yield return new WaitForSeconds(2);
+        button.SetActive(true);
     }
 }

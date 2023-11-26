@@ -5,10 +5,12 @@ using UnityEngine;
 public class OnLineClick : MonoBehaviour
 {
     public CutHandlerScript CHScript;
+    public GameHandler gameHandler;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameHandler = GameObject.Find("GameHandler").GetComponent<GameHandler>();
         CHScript = GameObject.Find("CutHandler").GetComponent<CutHandlerScript>();
     }
 
@@ -20,8 +22,12 @@ public class OnLineClick : MonoBehaviour
 
     private void OnMouseDown()
     {
-        CHScript.numOfCutLinesCut++;
-        Debug.Log("cut : " + CHScript.numOfCutLinesCut);
-        Destroy(gameObject);
+        if (gameHandler.gameTime > 0)
+        {
+            CHScript.numOfCutLinesCut++;
+            Debug.Log("cut : " + CHScript.numOfCutLinesCut);
+            Destroy(gameObject);
+        }
+       
     }
 }
