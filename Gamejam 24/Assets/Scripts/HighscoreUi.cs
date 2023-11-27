@@ -10,7 +10,7 @@ public class HighscoreUi : MonoBehaviour
     void Start()
     {
         text = GetComponent<Text>();
-        text.text = "Largest Profit: " + Mathf.Round(PlayerPrefs.GetFloat("HighScore") * 100) / 100;
+        text.text = "Largest Profit: " + Mathf.Round(PlayerPrefs.GetFloat("HighScore") * 100) / 100 + "$";
     }
 
     // Update is called once per frame

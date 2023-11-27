@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1828207597}
-  stringasdjaksd: '[Click and hold to drag the fruit into the pot]'
+  stringasdjaksd: '[Click and hold to drag the berries into the pot]'
 --- !u!1 &479944384
 GameObject:
   m_ObjectHideFlags: 0
@@ -658,7 +658,7 @@ MonoBehaviour:
   music: {fileID: 1075733383}
   text: {fileID: 147830351}
   gameTime: 60
-  sceneIndex: 2
+  sceneIndex: 3
   bigPling: {fileID: 1075733385}
 --- !u!82 &1075733383
 AudioSource:

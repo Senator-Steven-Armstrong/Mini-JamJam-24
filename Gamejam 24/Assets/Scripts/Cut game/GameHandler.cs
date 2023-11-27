@@ -39,6 +39,13 @@ public class GameHandler : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
 
     public IEnumerator StartGame()
     {

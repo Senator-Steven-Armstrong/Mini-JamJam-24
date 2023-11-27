@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 2060976599}
-  stringasdjaksd: '[Click to slice the fruit at the blue lines]'
+  stringasdjaksd: '[Click to slice the berries at the blue lines]'
 --- !u!1 &748036843
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,7 +1110,7 @@ MonoBehaviour:
   music: {fileID: 1260971279}
   text: {fileID: 1236415138}
   gameTime: 60
-  sceneIndex: 1
+  sceneIndex: 2
   bigPling: {fileID: 1260971280}
 --- !u!4 &1260971278
 Transform:

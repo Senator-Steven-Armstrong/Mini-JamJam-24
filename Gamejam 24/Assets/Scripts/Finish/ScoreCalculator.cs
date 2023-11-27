@@ -61,13 +61,13 @@ public class ScoreCalculator : MonoBehaviour
         {
             if(_currentMoney <= moneys && moneys >= 0)
             {
-                _currentMoney += 0.01f;
+                _currentMoney += 0.03f;
                 text.text = "Profit: " + (Mathf.Round(_currentMoney * 100) / 100).ToString() + "$";
             }
             else if (_currentMoney >= moneys && moneys < 0)
             {
                
-                _currentMoney -= 0.01f;
+                _currentMoney -= 0.03f;
                 text.text = "Profit: " + (Mathf.Round(_currentMoney * 100) / 100).ToString() + "$";
                
 
